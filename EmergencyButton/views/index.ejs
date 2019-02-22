@@ -1,0 +1,31 @@
+<% include partials/header %>
+    <center><h1 class="mt-3">Emergency!</h1></center>
+    <p align="center">In case of emergency, press the emergency button below</p>
+
+    <form action="requests/new" method="post">
+        <input type="text" hidden name="name" value="Test name">
+        <input type="text" hidden name="age" value="38">
+        <input type="text" hidden name="sex" value="Male">
+        <input type="text" hidden name="location" id="loc">
+        <input type="text" hidden name="phone" value="9526565656">
+        <input type="text" name="latitude" hidden id="lat">
+        <input type="text" name="longitude" hidden id="long">
+        <center><input type="image" src="/img/emergency-button.png" class="mt-5"></center>
+        <!-- <button type="su"></button> -->
+    </form>
+
+    <script>
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+        console.log("Error");
+        }
+        
+        function showPosition(position) {
+            document.getElementById("lat").value=position.coords.latitude;
+            document.getElementById("long").value=position.coords.longitude;
+            console.log(position.coords.latitude);
+            console.log(position.coords.longitude);
+        }
+        </script>
+<%include partials/footer %>
