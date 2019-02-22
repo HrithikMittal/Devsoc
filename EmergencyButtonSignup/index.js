@@ -6,6 +6,7 @@ var Details = require("./app/models/details");
 var MongoClient = require("mongodb").MongoClient;
 var AES = require("crypto-js/aes");
 var SHA256 = require("crypto-js/sha256");
+var CryptoJs = require("crypto-js");
 
 // Configure app for bodyParser()
 // lets us grab data from the body of POST
@@ -73,6 +74,7 @@ MongoClient.connect(url, (err, db) => {
         .route("/details")
         .post(function (req, res) {
             let status = true;
+            let pswd = CryptoJS.AES.encrypt(req.body.PatientPassword, 'devsockey');
             var person = new Details();
             person.booksdate = req.body.booksdate;
             person.PatientName = req.body.PatientName;
@@ -80,7 +82,7 @@ MongoClient.connect(url, (err, db) => {
             person.PatientNo = req.body.PatientNo;
             person.PatientDisease = req.body.PatientDisease;
             person.PatientDoctor = req.body.PatientDoctor;
-            person.PatientPassword = req.body.PatientPassword;
+            person.PatientPassword = pswd;
 
             dbo
                 .collection("details")
