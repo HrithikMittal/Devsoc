@@ -49,7 +49,7 @@ MongoClient.connect(url, (err, db) => {
     });
 
     // Post request with the details of the emergency and using the Google Maps API to get location details
-    app.all('/requests/new', function (req, res) {
+    app.post('/requests/new', function (req, res) {
 
         var latitude = req.body.latitude;
         var longitude = req.body.longitude;
@@ -86,9 +86,9 @@ MongoClient.connect(url, (err, db) => {
                     console.log("1 document inserted");
                     db.close();
                 });
-                res.redirect('/requests/success');
+                // res.redirect('/requests/success');
             } else {
-                res.redirect('/requests/failed');
+                // res.redirect('/requests/failed');
             }
         });
 
