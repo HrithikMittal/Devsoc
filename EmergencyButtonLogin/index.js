@@ -52,6 +52,7 @@ MongoClient.connect(url, (err, db) => {
         var person = new Details();
         person.PatientNo = req.body.PatientNo;
         person.PatientPassword = req.body.PatientPassword;
+        person.PatientName = req.body.PatientName;
         dbo.collection("details").find({}).toArray(function (err, result) {
             if (err) throw err;
             else {
