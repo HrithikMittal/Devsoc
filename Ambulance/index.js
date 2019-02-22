@@ -27,16 +27,19 @@ MongoClient.connect(url, (err, db) => {
     });
     // Route to view all the requests
     app.get('/requests/view', function (req, res) {
-        dbo.collection("ambulancedetail").find({}, function (err, allDetils) {
+        dbo.collection("ambulancedetail").find({}).toArray(function (err, result) {
+            console.log(err);
             res.render('viewall', {
                 title: "View all requests",
-                data: allDetils
+                data: result
             });
         });
     });
 
 
+    //post route for completed update
+
 });
-app.listen('3003', '127.0.0.1', function () {
-    console.log('Server started!');
+app.listen('3004', '127.0.0.1', function () {
+    console.log('Server is listening on port 3004!');
 });
