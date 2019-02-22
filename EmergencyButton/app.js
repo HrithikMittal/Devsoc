@@ -16,10 +16,8 @@ mongoose.connect('mongodb://localhost:27017/devsoc');
 // Todo:get details from Cookies
 var emergencySchema = new mongoose.Schema({
     name: String,
-    age: String,
     phone: String,
     location: String,
-    sex: String
 }, {
     versionKey: false
 });
