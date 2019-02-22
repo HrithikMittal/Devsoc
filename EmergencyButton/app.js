@@ -18,6 +18,9 @@ var emergencySchema = new mongoose.Schema({
     name: String,
     phone: String,
     location: String,
+    dob: String,
+    sex: String,
+    diseaseHistory: String,
 }, {
     versionKey: false
 });
@@ -60,19 +63,34 @@ app.post('/requests/new', function (req, res) {
 
     var latitude = req.body.latitude;
     var longitude = req.body.longitude;
-    var locationName = undefined;
+    var PatientNo = req.body.PatientNo;
+    // take patientNo  from the cookies
+
+
+
     var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&sensor=true&key=AIzaSyACjEFG5Hufa0S1NlDL1IH0bphLn334Ciw";
     request(url, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var locationDetails = JSON.parse(body);
             locationName = locationDetails["results"][0]["formatted_address"];
-            var data = {
-                name: req.body.name,
-                age: req.body.age,
-                phone: req.body.phone,
-                sex: req.body.sex,
-                location: locationName
-            }
+            dbo.collection("details").find({}).toArray(function (err, result) {
+                if (err) throw err;
+                else {
+                    console.log(result);
+                    for (i = 0; i < result.length; i++) {
+                        if (result[i].PatientNo == person.PatientNo) {
+                            var data = {
+                                name: result[i].PatientName,
+                                age: result[i].PatientAge,
+                                phone: result[i].PatientNo,
+                                sex: result[i].PatientSex,
+                                location: locationName,
+                                diseaseHistory: result[i].PatientDisease
+                            }
+                        }
+                    }
+                }
+            });
             Detail.create(data, function (err, detail) {
                 if (err) {
                     console.log(err);
