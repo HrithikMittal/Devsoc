@@ -7,6 +7,7 @@ var MongoClient = require("mongodb").MongoClient;
 var Cookies = require('cookies');
 var AES = require("crypto-js/aes");
 var SHA256 = require("crypto-js/sha256");
+var CryptoJS = require("crypto-js");
 
 var keys = ['keyboard cat']
 // Configure app for bodyParser()
