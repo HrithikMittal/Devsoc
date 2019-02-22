@@ -4,9 +4,11 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var Details = require("./app/models/details");
 var MongoClient = require("mongodb").MongoClient;
+var Cookies = require('cookies');
 var AES = require("crypto-js/aes");
 var SHA256 = require("crypto-js/sha256");
 
+var keys = ['keyboard cat']
 // Configure app for bodyParser()
 // lets us grab data from the body of POST
 app.use(
@@ -47,18 +49,24 @@ MongoClient.connect(url, (err, db) => {
 
     router.route("/patientlogin").post(function (req, res) {
         var person = new Details();
+        person.PatientNo = req.body.PatientNo;
         person.PatientPassword = req.body.PatientPassword;
         dbo.collection("details").find({}).toArray(function (err, result) {
             if (err) throw err;
             else {
                 console.log(result);
-                if (result.PatientPassword[i] == person.PatientPassword) {
-                    console.log(`User is Authenticated Congo!`);
-                    return true;
+                for (i = 0; i < result.length; i++) {
+                    if ((result[i].PatientNo == person.PatientNo) && (result[i].PatientPassword == person.PatientPassword)) {
+
+                        console.log(`User is Authenticated Congo!`);
+                        res.send(`User is Authenticated Congo!`);
+                        return;
+                    }
                 }
+                console.log(`User is Not Authenticated`);
+                res.send(`User is Not Authenticated`);
+                return;
             }
-            console.log(`User is Not Authenticated`);
-            return false;
         });
     });
 
