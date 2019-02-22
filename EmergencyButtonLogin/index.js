@@ -56,8 +56,10 @@ MongoClient.connect(url, (err, db) => {
             else {
                 console.log(result);
                 for (i = 0; i < result.length; i++) {
-                    if ((result[i].PatientNo == person.PatientNo) && (result[i].PatientPassword == person.PatientPassword)) {
-
+//                    var dbPassDec = result[i].PatientPassword;
+                    var bytes  = CryptoJS.AES.decrypt(result[i].PatientPassword.toString(), 'devsockey');
+                    var dbPassDec = bytes.toString(CryptoJS.enc.Utf8);
+                    if ((result[i].PatientNo == person.PatientNo) && (dbPassDec == person.PatientPassword)) {
                         console.log(`User is Authenticated Congo!`);
                         res.send(`User is Authenticated Congo!`);
                         return;
