@@ -8,6 +8,8 @@ var DetailSchema = new Schema({
   PatientDisease: String,
   PatientDoctor: String,
   PatientPassword: String,
+  PatientSex = String,
+  PatientDob = String,
 });
 
 module.exports = mongoose.model('Details', DetailSchema);
