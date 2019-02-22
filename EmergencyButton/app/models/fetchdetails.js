@@ -7,6 +7,7 @@ var emergencySchema = new mongoose.Schema({
     location: String,
     dob: String,
     sex: String,
+    completed: Number,
     diseaseHistory: String,
 }, {
     versionKey: false

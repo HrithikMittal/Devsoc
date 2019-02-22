@@ -55,7 +55,8 @@ MongoClient.connect(url, (err, db) => {
         var longitude = req.body.longitude;
         var PatientNo = req.body.PatientNo;
         // take patientNo  from the cookies
-
+        console.log(latitude);
+        console.log(longitude);
 
 
         var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&sensor=true&key=AIzaSyACjEFG5Hufa0S1NlDL1IH0bphLn334Ciw";
@@ -63,6 +64,7 @@ MongoClient.connect(url, (err, db) => {
             if (!error && response.statusCode == 200) {
                 var locationDetails = JSON.parse(body);
                 locationName = locationDetails["results"][0]["formatted_address"];
+                console.log(`${locationName}`);
                 dbo.collection("details").find({}).toArray(function (err, result) {
                     if (err) throw err;
                     else {
@@ -75,21 +77,22 @@ MongoClient.connect(url, (err, db) => {
                                     phone: result[i].PatientNo,
                                     sex: result[i].PatientSex,
                                     location: locationName,
+                                    completed: 0,
                                     diseaseHistory: result[i].PatientDisease
                                 }
+                                dbo.collection("ambulancedetail").insertOne(data, function (err, res) {
+                                    if (err) throw err;
+                                    console.log("1 document inserted");
+                                });
                             }
                         }
                     }
                 });
-                dbo.collection("ambulancedetail").insertOne(data, function (err, res) {
-                    if (err) throw err;
-                    console.log("1 document inserted");
-                    db.close();
-                });
-                // res.redirect('/requests/success');
+
             } else {
-                // res.redirect('/requests/failed');
+                console.log(err);
             }
+            res.send(`All work fine`);
         });
 
 
