@@ -6,7 +6,7 @@ var Details = require("./app/models/details");
 var MongoClient = require("mongodb").MongoClient;
 var AES = require("crypto-js/aes");
 var SHA256 = require("crypto-js/sha256");
-var CryptoJs = require("crypto-js");
+var CryptoJS = require("crypto-js");
 
 // Configure app for bodyParser()
 // lets us grab data from the body of POST
