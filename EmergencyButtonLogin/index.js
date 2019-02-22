@@ -7,6 +7,7 @@ var MongoClient = require("mongodb").MongoClient;
 var Cookies = require('cookies');
 var AES = require("crypto-js/aes");
 var SHA256 = require("crypto-js/sha256");
+var CryptoJS = require("crypto-js");
 
 var keys = ['keyboard cat']
 // Configure app for bodyParser()
@@ -56,8 +57,10 @@ MongoClient.connect(url, (err, db) => {
             else {
                 console.log(result);
                 for (i = 0; i < result.length; i++) {
-                    if ((result[i].PatientNo == person.PatientNo) && (result[i].PatientPassword == person.PatientPassword)) {
-
+//                    var dbPassDec = result[i].PatientPassword;
+                    var bytes  = CryptoJS.AES.decrypt(result[i].PatientPassword.toString(), 'devsockey');
+                    var dbPassDec = bytes.toString(CryptoJS.enc.Utf8);
+                    if ((result[i].PatientNo == person.PatientNo) && (dbPassDec == person.PatientPassword)) {
                         console.log(`User is Authenticated Congo!`);
                         res.send(`User is Authenticated Congo!`);
                         return;
