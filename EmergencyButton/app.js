@@ -99,7 +99,7 @@ MongoClient.connect(url, (err, db) => {
     });
 });
 app.listen('3003', '127.0.0.1', function () {
-    console.log('Server started!');
+    console.log('Server started on port 3003');
 });
 
 

@@ -38,6 +38,13 @@ MongoClient.connect(url, (err, db) => {
 
 
     //post route for completed update
+    app.get("/requests/:id/completed", function(req,res){
+    let id = req.params.id;
+    Detail.update({_id: id}, {$set: {isCompleted: '1'}}, function(err,result){
+        res.redirect("/requests/view");
+    });
+    
+});
 
 });
 app.listen('3004', '127.0.0.1', function () {
