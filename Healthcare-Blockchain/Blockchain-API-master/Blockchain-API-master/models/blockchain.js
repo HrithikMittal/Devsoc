@@ -3,19 +3,17 @@ const Promise = require("bluebird");
 const Block = require("./block");
 
 const blockChainSchema = mongoose.Schema({
-  chain: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "Block"
-    }
-  ]
+  chain: [{
+    type: mongoose.Schema.ObjectId,
+    ref: "Block"
+  }]
 });
 
 /**
  * @function addBlock
  * @param {Object} data
  */
-blockChainSchema.methods.addBlock = function(data, variable) {
+blockChainSchema.methods.addBlock = function (data, variable) {
   console.log(variable);
   return this.model("Blockchain")
     .findOne()
@@ -43,7 +41,8 @@ blockChainSchema.methods.addBlock = function(data, variable) {
 /**
  * @function validateChain
  */
-blockChainSchema.methods.validateChain = function() {
+
+blockChainSchema.methods.validateChain = function () {
   return this.model("Blockchain")
     .findOne()
     .populate("chain")

@@ -10,9 +10,7 @@ const mongoose = require("mongoose");
 const Promise = require("bluebird");
 mongoose.Promise = Promise;
 mongoose.connect(
-  "mongodb://localhost/Block-chain", {
-    useNewUrlParser: "true"
-  }
+  "mongodb://localhost:27017/blockchain"
 );
 
 var app = express();
