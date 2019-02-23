@@ -91,7 +91,7 @@ MongoClient.connect(url, (err, db) => {
                 .toArray(function (err, result) {
                     if (err) throw err;
                     for (var i = 0; i < result.length; i++) {
-                        if (person.pno == result[i].pno) {
+                        if (person.PatientNo == result[i].PatientNo) {
                             status = false;
                             console.log(status);
                         }
