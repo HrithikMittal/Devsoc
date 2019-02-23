@@ -14,11 +14,8 @@ app.get('/', function (req, res) {
 
 app.get('/privatechat', function (req, res) {
   res.sendFile(__dirname + '/index.html');
-})
+});
 
-app.get('/publicchat', function (req, res) {
-  res.sendFile(__dirname + '/public.html');
-})
 //open connection with socketio
 
 io.sockets.on('connection', function (socket) {

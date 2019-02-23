@@ -16,7 +16,11 @@ router.post("/create", function (req, res, next) {
       // return res.json({
       //   message: "Chain created!"
       // });
-      return res.sendfile('./Medicine/New-folder/index.html');
+      res.writeHead(200, {
+        "Content-type": "text/html"
+      });
+
+      res.write("<script>history.go(-1);</script>");
     })
     .catch(err => next(err));
 });
@@ -35,11 +39,15 @@ router.post("/display", (req, res, next) => {
     //console.log(B._conditions);
     var BB = B._conditions;
     console.log(BB["Content"]);
-    if (BB["Content"] = req.body.search) {
+    if (BB["Content"] == req.body.search) {
+      // res.redirect("/emptydb");
       return res.send("In the chain");
-    } else {
-      res.send("Not in the chain");
     }
+    // if (BB["Content"] == undefined) {
+    //   res.send("Not in the chain");
+    // } else {
+    //   res.send("Not in the chain");
+    // }
   });
 });
 
@@ -59,10 +67,15 @@ router.post("/addblock", (req, res, next) => {
         .addBlock(req.body, news)
         .then(result => {
           result.save().then(() => {
-            return res.json({
-              message: "Block successfully added.",
-              result: result
+            // return res.json({
+            //   message: "Block successfully added.",
+            //   result: result
+            // });
+            res.writeHead(200, {
+              "Content-type": "text/html"
             });
+
+            res.write("<script>history.go(-2);</script>");
             // return res.redirect("file:///C:/Users/Adhikansh/Desktop/Devsoc%20Project/Healthcare-Blockchain/Medicine/New%20folder/index.html");
           });
         })
@@ -99,7 +112,8 @@ router.get("/emptydb", (req, res, next) => {
     .then(() => Block.remove({}).exec())
     .then(() =>
       res.json({
-        success: true
+        success: true,
+        message: "You got the Right Medicine",
       })
     )
     .catch(err => next(err));
