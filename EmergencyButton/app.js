@@ -61,7 +61,8 @@ MongoClient.connect(url, (err, db) => {
     // take patientNo  from the cookies
     console.log(latitude);
     console.log(longitude);
-
+    console.log(PatientNo);
+    console.log(typeof PatientNo);
     var url =
       "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
       latitude +
@@ -79,7 +80,6 @@ MongoClient.connect(url, (err, db) => {
           .toArray(function(err, result) {
             if (err) throw err;
             else {
-              console.log(result);
               for (i = 0; i < result.length; i++) {
                 if (result[i].PatientNo == PatientNo) {
                   var data = {
@@ -91,6 +91,7 @@ MongoClient.connect(url, (err, db) => {
                     completed: 0,
                     diseaseHistory: result[i].PatientDisease
                   };
+                  console.log(data);
                   dbo
                     .collection("ambulancedetail")
                     .insertOne(data, function(err, res) {
