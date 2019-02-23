@@ -45,12 +45,12 @@
                     <th>Name</th>
                     <th>Phone</th>
                     <th>Sex</th>
-                    <th>Age</th>
+                    <th>DOB</th>
                     <th>Location</th>
                     <!-- <th>Complete</th> -->
                 </tr>
                 <% data.forEach(function(detail){ %>
-                <tr <% if(detail.completed==1 ){ %>class="font-weight-bold" style="background-color: lightgreen;"
+                <tr <% if(detail.isCompleted==1 ){ %>class="font-weight-bold" style="background-color: lightgreen;"
                     <%}%> >
                     <td>
                         <%= detail.name %>
@@ -78,13 +78,13 @@
                     <th>Name</th>
                     <th>Phone</th>
                     <th>Sex</th>
-                    <th>Age</th>
+                    <th>DOB</th>
                     <th>Location</th>
                     <th>Complete</th>
                 </tr>
 
                 <% data.forEach(function(detail){ %>
-                <%if(detail.completed==0){%>
+                <%if(detail.isCompleted==0){%>
                 <tr>
                     <td>
                         <%= detail.name %>

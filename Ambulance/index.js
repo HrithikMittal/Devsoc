@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var request = require("request");
 var MongoClient = require("mongodb").MongoClient;
+var ObjectID = require('mongodb').ObjectID;
 app.use(
   bodyParser.urlencoded({
     extended: true
@@ -16,6 +17,20 @@ url = "mongodb://localhost:27017/devsoc";
 
 // Todo:get details from Cookies
 
+app.get("/requests/:id/completed", function(req, res) {
+    var idup = req.params.id;
+    var query = {_id:idup};
+    MongoClient.connect(url,function(err,db)
+    {
+        if(err) throw err;
+        var dbo = db.db("devsoc");
+        dbo.collection("ambulancedetails").update({_id:ObjectID(idup)},{$set:{isCompleted:"1"}},function(err,ress)
+        {
+          if(err) throw err;
+          res.redirect("/");
+        });
+    });
+});
 MongoClient.connect(url, (err, db) => {
   const dbo = db.db("devsoc");
 
@@ -25,10 +40,11 @@ MongoClient.connect(url, (err, db) => {
   // Route to view all the requests
   app.get("/", function(req, res) {
     dbo
-      .collection("ambulancedetail")
+      .collection("ambulancedetails")
       .find({})
       .toArray(function(err, result) {
-        console.log(err);
+        if(err) throw err;
+        //console.log(result);
         res.render("viewall", {
           title: "View all requests",
           data: result
@@ -37,44 +53,7 @@ MongoClient.connect(url, (err, db) => {
   });
 
   //post route for completed update
-  app.get("/requests/:id/completed", function(req, res) {
-    dbo
-      .collection("ambulancedetail")
-      .find({})
-      .toArray(function(err, result) {
-        let id = req.params.id;
-        console.log(id);
-        for (i = 0; i < result.length; i++) {
-          if (result[i]._id == id) {
-            console.log("Hello");
-            myold = {
-              _id: id
-            };
-            mynew = {
-              $set: {
-                _id: id,
-                name: result[i].name,
-                age: result[i].age,
-                phone: result[i].phone,
-                sex: result[i].sex,
-                location: result[i].location,
-                completed: 1,
-                diseaseHistory: result[i].diseaseHistory
-              }
-            };
-
-            console.log(myold);
-            console.log(mynew);
-            dbo
-              .collection("ambulancedetail")
-              .updateOne(myold, mynew, function(err, result) {
-                console.log("Hello chnages is happen");
-                res.send("Hello");
-              });
-          }
-        }
-      });
-  });
+  
 });
 app.listen("3004", "127.0.0.1", function() {
   console.log("Server is listening on port 3004!");

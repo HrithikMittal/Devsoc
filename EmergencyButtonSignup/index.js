@@ -7,6 +7,10 @@ var MongoClient = require("mongodb").MongoClient;
 var AES = require("crypto-js/aes");
 var SHA256 = require("crypto-js/sha256");
 var CryptoJS = require("crypto-js");
+cookieParser = require('cookie-parser');
+var request = require("request");
+app.use(express.static("public"));
+app.use(cookieParser());
 
 // Configure app for bodyParser()
 // lets us grab data from the body of POST
@@ -18,14 +22,94 @@ app.use(
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
 
-app.get("/", function (req, res) {
-    res.render("registration.ejs");
-});
-
 
 
 // Set up port for server to listen on
 var port = process.env.PORT || 3001;
+
+
+app.get("/", function (req, res) {
+    res.render("registration.ejs");
+});
+
+app.get("/requests/success", function(req, res) {
+    res.render("success.ejs", {
+    title: "Emergency request submitted successfully!"
+    });
+});
+
+app.get("/requests/failed", function(req, res) {
+    res.render("failed.ejs", {
+    title: "Some error occured!"
+    });
+});
+
+app.post("/requests/new", function(req, res) {
+    var latitude = req.body.latitude;
+    var longitude = req.body.longitude;
+    var PatientNumber = req.cookies.userMob;
+// take patientNo  from the cookies
+    // console.log(latitude);
+    // console.log(longitude);
+    // console.log(PatientNumber);
+//console.log(typeof PatientNo);
+var url2 =
+    "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+    latitude +
+    "," +
+    longitude +
+    "&sensor=true&key=AIzaSyACjEFG5Hufa0S1NlDL1IH0bphLn334Ciw";
+    request(url2, function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+            var locationDetails = JSON.parse(body);
+            locationName = locationDetails["results"][0]["formatted_address"];
+            //console.log(`${locationName}`);
+            MongoClient.connect(url,function(err,db)
+            {
+                if(err) throw err;
+                var dbo = db.db("devsoc");
+                dbo.collection("details").find({}).toArray(function(err,resulted)
+                {
+                    if(err) throw err;
+                //   console.log(resulted);
+                   for(var i=0;i<resulted.length;i++)
+                   {
+                      if(resulted[i].PatientNo == PatientNumber)
+                      {
+                        var inname = resulted[i].PatientName;
+                        var insex = resulted[i].PatientSex;
+                        var indob = resulted[i].PatientDob;
+                        var innumber = resulted[i].PatientNo;
+                        var inlocation = locationName;
+                        var inobj = {
+                          name: inname,
+                          phone: innumber ,
+                          age: indob ,
+                          sex: insex,
+                          location: inlocation,
+                          isCompleted:"0"
+                        }; 
+                       console.log(inobj);
+                        dbo.collection("ambulancedetails").insertOne(inobj,function(err,rr)
+                        {
+                          if(err) throw err;
+                        //   console.log(rr);
+                        });
+                      }
+                   }
+
+                });
+                
+            });
+        } 
+        
+        else {
+        console.log(error);
+        }
+        res.render("success", { title: "Success" });
+    });
+});
+
 
 // Connect to DB
 // var url = "mongodb://adhi:password123@ds141796.mlab.com:41796/signup";
@@ -33,6 +117,26 @@ var url = "mongodb://localhost:27017/";
 
 MongoClient.connect(url, (err, db) => {
     const dbo = db.db("devsoc");
+
+
+    app.get("/emergency",function(req,res){
+        var mobileCookie = (req.cookies.userMob);
+        console.log("Cookie: "+mobileCookie);
+        mobileCookie = parseInt(mobileCookie);
+        dbo
+            .collection("details")
+            .find({"PatientNo": mobileCookie})
+            .toArray(function(err, result) {
+                if(err) throw err;
+                // console.log(result);
+                res.render("index.ejs",{data: result});
+            });
+        
+    });
+    
+    app.get("/login",function(req,res){
+        res.render("login");
+    });
 
     //API Routes
     var router = express.Router();
@@ -58,10 +162,10 @@ MongoClient.connect(url, (err, db) => {
             .updateMany(exits, updatevalue, function (err, res) {
                 if (err) throw err;
                 console.log("1 document updated");
-                db.close();
             });
     });
 
+    
 
     app.post("/details", function (req, res) {
             let status = true;
@@ -96,6 +200,7 @@ MongoClient.connect(url, (err, db) => {
                                 };
                             console.log("1 document inserted sucessfully");
                             // res.send do not work here
+
                         });
                     }
                     res.render("login");
@@ -116,6 +221,7 @@ MongoClient.connect(url, (err, db) => {
 
 
     app.post("/patientlogin", function (req, res) {
+        var t = 0;
         var person = new Details();
         person.PatientNo = req.body.PatientNo;
         person.PatientPassword = req.body.PatientPassword;
@@ -123,22 +229,27 @@ MongoClient.connect(url, (err, db) => {
         dbo.collection("details").find({}).toArray(function (err, result) {
             if (err) throw err;
             else {
-                console.log(result);
+                // console.log(result);
                 for (i = 0; i < result.length; i++) {
 
                     //    var dbPassDec = result[i].PatientPassword;
                     var bytes = CryptoJS.AES.decrypt(result[i].PatientPassword.toString(), 'devsockey');
                     var dbPassDec = bytes.toString(CryptoJS.enc.Utf8);
                     if ((result[i].PatientNo == person.PatientNo) && (dbPassDec == person.PatientPassword)) {
-                        console.log(`User is Authenticated Congo!`);
-                        res.redirect("http://localhost:3003");
-                        res.send(`User is Authenticated Congo!`);
-                        return;
+                        res.cookie('userMob', result[i].PatientNo);
+                        t=1;
+                        res.redirect("/emergency");
                     }
                 }
-                console.log(`User is Not Authenticated`);
-                res.send(`User is Not Authenticated`);
-                return;
+                if(t==1)
+                {
+                    console.log(`User is authenitcated`);
+                }
+                if(t==0)
+                {
+                    console.log(`User is ot authenitcated`);
+                    res.redirect("/login");
+                }
             }
         });
     });
