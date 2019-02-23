@@ -50,7 +50,7 @@
                     <!-- <th>Complete</th> -->
                 </tr>
                 <% data.forEach(function(detail){ %>
-                <tr <% if(detail.isCompleted=='1' ){ %>class="font-weight-bold" style="background-color: lightgreen;"
+                <tr <% if(detail.completed==1 ){ %>class="font-weight-bold" style="background-color: lightgreen;"
                     <%}%> >
                     <td>
                         <%= detail.name %>
@@ -84,7 +84,7 @@
                 </tr>
 
                 <% data.forEach(function(detail){ %>
-                <%if(detail.completed=='0'){%>
+                <%if(detail.completed==0){%>
                 <tr>
                     <td>
                         <%= detail.name %>

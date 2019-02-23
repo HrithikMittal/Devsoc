@@ -5,9 +5,9 @@ var bodyParser = require("body-parser");
 var request = require("request");
 var MongoClient = require("mongodb").MongoClient;
 app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
+    bodyParser.urlencoded({
+        extended: true
+    })
 );
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -17,35 +17,64 @@ url = "mongodb://localhost:27017/devsoc";
 // Todo:get details from Cookies
 
 MongoClient.connect(url, (err, db) => {
-  const dbo = db.db("devsoc");
+    const dbo = db.db("devsoc");
 
-  //API Routes
-  var router = express.Router();
-  
-  // Route to view all the requests
-  app.get("/", function(req, res) {
-    dbo
-      .collection("ambulancedetail")
-      .find({})
-      .toArray(function(err, result) {
-        console.log(err);
-        res.render("viewall", {
-          title: "View all requests",
-          data: result
-        });
-      });
-  });
+    //API Routes
+    var router = express.Router();
 
-  //post route for completed update
-  app.get("/requests/:id/completed", function(req, res) {
-    let id = req.params.id;
-    dbo
-      .collection("ambulancedetail")
-      .update({ _id: id }, { $set: { completed: "1" } }, function(err, result) {
-        res.redirect("/");
-      });
-  });
+    // Route to view all the requests
+    app.get("/", function (req, res) {
+        dbo
+            .collection("ambulancedetail")
+            .find({})
+            .toArray(function (err, result) {
+                console.log(err);
+                res.render("viewall", {
+                    title: "View all requests",
+                    data: result
+                });
+            });
+    });
+
+    //post route for completed update
+    app.get("/requests/:id/completed", function (req, res) {
+        dbo
+            .collection("ambulancedetail")
+            .find({})
+            .toArray(function (err, result) {
+                let id = req.params.id;
+                console.log(id);
+                for (i = 0; i < result.length; i++) {
+                    if (result[i]._id == id) {
+                        console.log("Hello");
+                        mynew = {
+                            $set: {
+                                _id: id,
+                                name: result[i].name,
+                                age: result[i].age,
+                                phone: result[i].phone,
+                                sex: result[i].sex,
+                                location: result[i].location,
+                                completed: 1,
+                                diseaseHistory: result[i].diseaseHistory
+                            }
+                        };
+                        myold = {
+                            _id: id
+                        };
+                        console.log(myold);
+                        console.log(mynew);
+                        dbo
+                            .collection("ambulancedetail")
+                            .updateOne(myold, mynew, function (err, result) {
+                                console.log("Hello chnages is happen");
+                                res.send(result);
+                            });
+                    }
+                }
+            });
+    });
 });
-app.listen("3004", "127.0.0.1", function() {
-  console.log("Server is listening on port 3004!");
+app.listen("3004", "127.0.0.1", function () {
+    console.log("Server is listening on port 3004!");
 });
