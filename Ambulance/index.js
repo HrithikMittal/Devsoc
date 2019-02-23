@@ -66,9 +66,11 @@ MongoClient.connect(url, (err, db) => {
                         console.log(mynew);
                         dbo
                             .collection("ambulancedetail")
-                            .updateOne(myold, mynew, function (err, result) {
+                            .updateOne(myold, mynew, {
+                                upsert: true
+                            }, function (err, result) {
                                 console.log("Hello chnages is happen");
-                                res.send(result);
+                                res.redirect("/");
                             });
                     }
                 }
