@@ -49,7 +49,6 @@ MongoClient.connect(url, (err, db) => {
                         console.log("Hello");
                         mynew = {
                             $set: {
-                                _id: id,
                                 name: result[i].name,
                                 age: result[i].age,
                                 phone: result[i].phone,
@@ -70,6 +69,7 @@ MongoClient.connect(url, (err, db) => {
                                 upsert: true
                             }, function (err, result) {
                                 console.log("Hello chnages is happen");
+                                res.writeHead("200");
                                 res.redirect("/");
                             });
                     }
