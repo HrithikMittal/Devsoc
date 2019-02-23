@@ -8,6 +8,7 @@ from sklearn.metrics import classification_report
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import mean_absolute_error
 import warnings
+import csv
 
 
 warnings.filterwarnings("ignore")
@@ -37,5 +38,22 @@ encoder2 = OneHotEncoder(sparse=False)
 integer2 = label2.reshape(len(label2), 1)
 onehot2 = encoder2.fit_transform(integer2)
 custom_pre = model.predict(custom_x)
-print(mean_absolute_error(onehot2, custom_pre))
-print(classification_report(onehot2, custom_pre))
+#print(custom_x)
+#print(custom_pre)
+#print(mean_absolute_error(onehot2, custom_pre))
+#print(classification_report(onehot2, custom_pre))
+
+#making symptom array
+#sym = [i for i in input("Enter the symptoms separated by space: ").split()]
+#a = np.zeros((1,132))
+#for i in range(len(data.columns)):
+#    for j in sym:
+#        if(j==data.columns[i]):
+#            np.put(a,i,1)
+#end
+
+#print(custom_y)
+#print(label2)
+#print(integer2)
+#print(onehot2)
+print(custom_pre)

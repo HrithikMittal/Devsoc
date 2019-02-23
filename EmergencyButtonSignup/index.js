@@ -15,7 +15,14 @@ app.use(
         extended: true
     })
 );
+app.set("view engine", "ejs");
 app.use(bodyParser.json());
+
+app.get("/", function (req, res) {
+    res.render("registration.ejs");
+});
+
+
 
 // Set up port for server to listen on
 var port = process.env.PORT || 3001;
@@ -30,23 +37,8 @@ MongoClient.connect(url, (err, db) => {
     //API Routes
     var router = express.Router();
 
-    // Routes will all be prefixed with /API
-    app.use("/api", router);
 
-    //MIDDLE WARE-
-    router.use(function (req, res, next) {
-        console.log("FYI...There is some processing currently going down");
-        next();
-    });
-
-    // test route
-    router.get("/", function (req, res) {
-        res.json({
-            message: "Welcome !"
-        });
-    });
-
-    router.route("/details-update").post(function (req, res) {
+    app.post("/details-update", function (req, res) {
         var exits = {
             PatientNo: req.body.PatientNo
         };
@@ -70,9 +62,8 @@ MongoClient.connect(url, (err, db) => {
             });
     });
 
-    router
-        .route("/details")
-        .post(function (req, res) {
+
+    app.post("/details", function (req, res) {
             let status = true;
             let pswd = CryptoJS.AES.encrypt(req.body.PatientPassword, 'devsockey');
             var person = new Details();
@@ -107,7 +98,7 @@ MongoClient.connect(url, (err, db) => {
                             // res.send do not work here
                         });
                     }
-                    res.send("Proccess successfully done...");
+                    res.render("login");
                     return status;
                 });
         })
@@ -122,6 +113,39 @@ MongoClient.connect(url, (err, db) => {
                 });
             res.send("done");
         });
+
+
+    app.post("/patientlogin", function (req, res) {
+        var person = new Details();
+        person.PatientNo = req.body.PatientNo;
+        person.PatientPassword = req.body.PatientPassword;
+        person.PatientName = req.body.PatientName;
+        dbo.collection("details").find({}).toArray(function (err, result) {
+            if (err) throw err;
+            else {
+                console.log(result);
+                for (i = 0; i < result.length; i++) {
+
+                    //    var dbPassDec = result[i].PatientPassword;
+                    var bytes = CryptoJS.AES.decrypt(result[i].PatientPassword.toString(), 'devsockey');
+                    var dbPassDec = bytes.toString(CryptoJS.enc.Utf8);
+                    if ((result[i].PatientNo == person.PatientNo) && (dbPassDec == person.PatientPassword)) {
+                        console.log(`User is Authenticated Congo!`);
+                        res.redirect("http://localhost:3003");
+                        res.send(`User is Authenticated Congo!`);
+                        return;
+                    }
+                }
+                console.log(`User is Not Authenticated`);
+                res.send(`User is Not Authenticated`);
+                return;
+            }
+        });
+    });
+
+
+
+
 });
 // Fire up server
 app.listen(port);
