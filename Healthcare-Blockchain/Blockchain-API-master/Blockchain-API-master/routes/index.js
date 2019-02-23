@@ -59,11 +59,11 @@ router.post("/addblock", (req, res, next) => {
         .addBlock(req.body, news)
         .then(result => {
           result.save().then(() => {
-            // return res.json({
-            //   message: "Block successfully added.",
-            //   result: result
-            // });
-            return res.redirect("file:///C:/Users/Adhikansh/Desktop/Devsoc%20Project/Healthcare-Blockchain/Medicine/New%20folder/index.html");
+            return res.json({
+              message: "Block successfully added.",
+              result: result
+            });
+            // return res.redirect("file:///C:/Users/Adhikansh/Desktop/Devsoc%20Project/Healthcare-Blockchain/Medicine/New%20folder/index.html");
           });
         })
         .catch(err => next(err));
