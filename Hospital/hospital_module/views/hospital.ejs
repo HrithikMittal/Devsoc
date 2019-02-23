@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hospitals</title>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap-tagsinput.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="bootstrap-tagsinput.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh5U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	<style>
+		input.formboxes{
+			height: 40px;
+			width: 75%;
+		}
+		input.formboxes:hover, textarea:hover, select:hover{
+			box-shadow: 3px 3px #cccccc;
+		}		
+		input.formbuttons{
+			padding: 0.5%; 
+			width: 150px;
+			color: white;
+			background-color: #3B5998;
+			font-weight: bold;
+			font-size: 125%;
+			border: none;
+		}
+		input.formbuttons:hover{
+			color: #3B5998;
+			background: linear-gradient(to right, #3B5998, #e6e6e6);
+			transition: 1.3s;
+			color: black;
+		}
+		textarea, select{
+		width: 75%;
+		}
+		.regform{
+			border-style: solid;
+			border-radius: 45px;
+			background: white;
+			float: left;
+		}
+		body{
+			background: #FDFC47;
+			background: -webkit-linear-gradient(to right, #24FE41, #FDFC47);
+			background: linear-gradient(to right, #24FE41, #FDFC47);
+		}
+		.open{
+			width: 60px;
+		}
+		hr{
+			border: 1px solid black;
+			margin: 0 5% 0 5%;
+		}
+	</style>
+</head>
+
+<body>
+	<br><br><br>
+<div class="container">
+<br><br>
+<div class="row">
+		<div class="col-xs-4 col-md-4">
+		</div>
+		<div class="col-xs-6 col-md-6">
+			<br>
+			<h1 style="font-size: 350%">Hospitals' Portal</h1>
+		</div>
+		<div class="col-xs-2 col-md-2">
+		</div>
+	</div>
+	<br><br>
+<div class="row">
+<div class="col-md-12 col-lg-6">
+<div class="regform">
+<br>
+		<div class="row">
+		<div class="col-xs-4 col-md-4">
+		</div>
+		<div class="col-xs-4 col-md-4">
+			<br>
+			<h1>Registration</h1>
+		</div>
+		<div class="col-xs-4 col-md-4">
+		</div>
+	</div>
+	<br>
+	<form action="/hospitalsreg" method="post" oninput="from.value=fromhour.value+':'+frommin.value+':'+fromdur.value; to.value=tohour.value+':'+tomin.value+':'+todur.value">
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-4 col-md-4">
+				<h5>Hospital Name <span style="color:red">*</span></h5>	
+			</div>
+			<div class="col-xs-6 col-md-6">
+				<input type="text" required class="formboxes" name="hname">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-4 col-md-4">
+				<h5>Address <span style="color:red">*</span>	</h5>
+			</div>
+			<div class="col-xs-6 col-md-6">
+				<textarea class="formboxes" noresize cols="22" required name="address"></textarea>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-4 col-md-4">
+				<h5>Phone No. <span style="color:red">*</span>	</h5>
+			</div>
+			<div class="col-xs-6 col-md-6">
+				<input type="tel" required class="formboxes" name="pno">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-4 col-md-4">
+				<h5>Hospital ID <span style="color:red">*</span>	</h5>
+			</div>
+			<div class="col-xs-6 col-md-6">
+				<input type="text" required class="formboxes" name="id">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-4 col-md-4">
+				<h5>Password	<span style="color:red">*</span></h5>
+			</div>
+			<div class="col-xs-6 col-md-6">
+				<input name="pwd" type="password" class="formboxes" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="form" id="pwd">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-4 col-md-4">
+				<h5>Confirm Password	<span style="color:red">*</span></h5>
+			</div>
+			<div class="col-xs-6 col-md-6">
+				<input name="conf-pwd" type="password" class="formboxes" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="form" id="conf-pwd" onblur="check()">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-9 col-md-9">
+				<p id="errormsg" style="display:none;"></p><br><br>
+				<p style="font-size: 110%; color: #3B5998"><strong><span style="color: red">NOTE: </span></strong> Password is case sensitive and it must contain at least one number, one uppercase letter, one lowercase letter and at least 8 or more characters</p>
+			</div>
+			<div class="col-xs-1 col-md-1">
+			</div>
+		</div>
+		<br><br>
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-8 col-md-8">
+				<input type="submit" id="save" value="SAVE" class="formbuttons"> &nbsp;
+				<input type="reset" value="RESET" class="formbuttons"> &nbsp;
+			</div>
+			<div class="col-xs-2 col-md-2">
+			</div>
+		</div>
+		<br>
+		</frameset>
+	</form>
+</div>
+</div>
+<div class="col-md-12 col-lg-6">
+<div class="regform">
+<br>	
+	<div class="row">
+		<div class="col-xs-4 col-md-4">
+		</div>
+		<div class="col-xs-4 col-md-4">
+			<br>
+			<h1>Login</h1>
+		</div>
+		<div class="col-xs-4 col-md-4">
+		</div>
+	</div>
+	<br><br>
+	<form action="/hospitallogin" method="post">
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-4 col-md-4">
+				<h5>Hospital ID <span style="color:red">*</span></h5>	
+			</div>
+			<div class="col-xs-6 col-md-6">
+				<input type="tel" style="height: 40px;" required class="formboxes" name="id">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-4 col-md-4">
+				<h5>Password	<span style="color:red">*</span></h5>
+			</div>
+			<div class="col-xs-6 col-md-6">
+				<input name="pwd" style="height: 40px;" type="password" class="formboxes" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="form" id="pwd">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-9 col-md-9">
+				<p id="errormsg" style="display:none;"></p><br><br>
+				<p style="font-size: 110%; color: #3B5998"><strong><span style="color: red">NOTE: </span></strong> Password is case sensitive and it must contain at least one number, one uppercase letter, one lowercase letter and at least 8 or more characters</p>
+			</div>
+			<div class="col-xs-1 col-md-1">
+			</div>
+		</div>
+		<br><br>
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-8 col-md-8">
+				<input type="submit" id="save" value="SAVE" class="formbuttons"> &nbsp;
+				<input type="reset" value="RESET" class="formbuttons"> &nbsp;
+			</div>
+			<div class="col-xs-2 col-md-2">
+			</div>
+		</div>
+		<br>
+	</form>
+</div>
+</div>
+</div>
+<br><br>
+</div>
+
+<script>
+		function check(){
+			var p=document.getElementById("pwd").value;
+			var c=document.getElementById("conf-pwd").value;
+			document.getElementById("errormsg").style.display = 'inline';
+			if(p!=c)
+			{
+				document.getElementById("errormsg").style.display = 'inline';
+				document.getElementById("errormsg").style.color = 'red';
+				document.getElementById("errormsg").innerHTML = "Passwords Don't Match"; 
+			}
+			else
+			{
+				document.getElementById("errormsg").innerHTML = " "; 
+			}
+			
+		}
+		function reset(){
+			document.getElementById("errormsg").style.display = 'inline';
+			document.getElementById("errormsg").innerHTML = " "; 
+		}
+</script>
+</body>
+</html>

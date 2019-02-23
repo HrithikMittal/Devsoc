@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add / Remove Doctor</title>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap-tagsinput.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="bootstrap-tagsinput.js"></script>
+<style>
+
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	<style>
+		input.formboxes{
+			height: 40px;
+			width: 80%;
+		}
+		input.formboxes:hover{
+			box-shadow: 3px 3px #cccccc;
+		}
+		input.formbuttons{
+			padding: 0.5%; 
+			width: 175px;
+			color: white;
+			background-color: #3B5998;
+			font-weight: bold;
+			font-size: 125%;
+			border: none;
+		}
+		input.formbuttons:hover{
+			color: #3B5998;
+			background: linear-gradient(to right, #3B5998, #e6e6e6);
+			transition: 1.3s;
+			color: black;
+		}
+		.regform{
+			border-style: solid;
+			border-radius: 45px;
+		}
+		body{
+			background: #FDFC47;
+			background: -webkit-linear-gradient(to right, #24FE41, #FDFC47);
+			background: linear-gradient(to right, #24FE41, #FDFC47);
+		}
+		.regform{
+		background: white;
+		}
+	</style>
+</head>
+
+<body>
+	<br><br>
+	<div class="container" style="background-color:white; padding:30px; border: 2px solid black; border-radius:30px;">
+		<div class="row">
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr>
+						<td><h3>Doctor's Id</h3></td>
+						<td><h3>Doctor's Name</h3></td>
+					</tr>
+				</thead>
+				
+				<% for(var i=0; i < data.length; i++) { %>
+					<tr>
+						<td><%= data[i].doctor_id %></td>
+						<td><%= data[i].doctor_name %></td>
+					</tr>
+				 <% } %>
+			</table>
+		</div>
+	</div>
+	<br>
+<div class="container">
+<br><br>
+<div class="row">
+<div class="col-xs-1 col-md-1">
+</div>
+<div class="col-xs-10 col-md-10">
+<div class="row">
+<div class="col-md-12 col-lg-6">
+<div class="regform">
+<br>
+	<div class="row">
+		<div class="col-xs-3 col-md-3">
+		</div>
+		<div class="col-xs-7 col-md-7">
+			<br>
+			<h1>Add Doctor</h1>
+		</div>
+		<div class="col-xs-2 col-md-2">
+		</div>
+	</div>
+	<br><br><br>
+	<form action="/add_doctor" method="post">
+		<input type="hidden" name="" value="<%= data.h_id %>" />
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-5 col-md-5">
+				<h3>Doctor ID <span style="color:red">*</span></h3>	
+			</div>
+			<div class="col-xs-5 col-md-5">
+				<input type="text" style="height: 40px;" required class="formboxes" name="id">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-5 col-md-5">
+				<h3>Doctor Name <span style="color:red">*</span></h3>	
+			</div>
+			<div class="col-xs-5 col-md-5">
+				<input type="text" style="height: 40px;" required class="formboxes" name="name">
+			</div>
+		</div>
+		<br><br>
+		<div class="row">
+			<div class="col-xs-1 col-md-1">
+			</div>
+			<div class="col-xs-11 col-md-11">
+				<input type="submit" id="save" value="ADD DOCTOR" class="formbuttons"> &nbsp;
+				<input type="reset" value="RESET" class="formbuttons"> &nbsp;
+			</div>
+		</div>
+		<br>
+	</form>
+</div>
+</div>
+	
+<div class="col-md-12 col-lg-6">
+<div class="regform">
+<br>
+	<div class="row">
+		<div class="col-xs-2 col-md-2">
+		</div>
+		<div class="col-xs-8 col-md-8">
+			<br>
+			<h1>Remove Doctor</h1>
+		</div>
+		<div class="col-xs-2 col-md-2">
+		</div>
+	</div>
+	<br><br><br>
+	<form action="login.php" method="post">
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+			</div>
+			<div class="col-xs-5 col-md-5">
+				<h3>Doctor ID <span style="color:red">*</span></h3>	
+			</div>
+			<div class="col-xs-5 col-md-5">
+				<input type="text" style="height: 40px;" required class="formboxes" name="id">
+			</div>
+		</div>
+		<br><br>
+		<div class="row">
+			<div class="col-xs-1 col-md-1">
+			</div>
+			<div class="col-xs-11 col-md-11">
+				<input type="submit" id="save" value="REMOVE DOCTOR" class="formbuttons"> &nbsp;
+				<input type="reset" value="RESET" class="formbuttons">
+			</div>
+		</div>
+		<br>
+	</form>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xs-1 col-md-1">
+</div>
+</div>
+	<br><br>
+<div class="row">
+<div class="col-xs-5 col-md-5">
+</div>
+<div class="col-xs-2 col-md-2">
+<input type="button" value="BACK" class="formbuttons" onclick="window.location.href='doctors_list.html'">
+</div>
+<div class="col-xs-5 col-md-5">
+</div>
+</div>
+<br><br>
+</div>
+</body>
+</html>

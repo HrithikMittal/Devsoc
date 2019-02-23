@@ -44,16 +44,18 @@ custom_pre = model.predict(custom_x)
 #print(classification_report(onehot2, custom_pre))
 
 #making symptom array
-#sym = [i for i in input("Enter the symptoms separated by space: ").split()]
-#a = np.zeros((1,132))
-#for i in range(len(data.columns)):
-#    for j in sym:
-#        if(j==data.columns[i]):
-#            np.put(a,i,1)
-#end
 
-#print(custom_y)
-#print(label2)
-#print(integer2)
-#print(onehot2)
+sym = [i for i in input("Enter the symptoms separated by space: ").split()]
+a = np.zeros((1,132))
+for i in range(len(data.columns)):
+    for j in sym:
+        if(j==data.columns[i]):
+            np.put(a,i,1)
+    end
+end
+
+print(custom_y)
+print(label2)
+print(integer2)
+print(onehot2)
 print(custom_pre)

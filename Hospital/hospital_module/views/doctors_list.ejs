@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Doctors List</title>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap-tagsinput.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="bootstrap-tagsinput.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	<style>
+		input.formboxes{
+			height: 40px;
+		}
+		input.formboxes:hover{
+			box-shadow: 3px 3px #cccccc;
+		}
+		input.formbuttons{
+			padding: 0.5%; 
+			width: 250px;
+			color: white;
+			background-color: #3B5998;
+			font-weight: bold;
+			font-size: 125%;
+			border: none;
+		}
+		input.formbuttons:hover{
+			color: #3B5998;
+			background: linear-gradient(to right, #3B5998, #e6e6e6);
+			transition: 1.3s;
+			color: black;
+		}
+		.regform{
+			border-style: solid;
+			border-radius: 45px;
+		}
+		body{
+			background: #FDFC47;
+			background: -webkit-linear-gradient(to right, #24FE41, #FDFC47);
+			background: linear-gradient(to right, #24FE41, #FDFC47);
+		}
+		.regform{
+		background: white;
+		}
+	</style>
+</head>
+
+<body>
+	<br><br>
+<div class="container">
+<br><br>
+<div class="row">
+		<div class="col-xs-4 col-md-4">
+		</div>
+		<div class="col-xs-6 col-md-6">
+			<br>
+			<h1 style="font-size: 350%">List Of Doctors (Doctor IDs)</h1>
+		</div>
+		<div class="col-xs-2 col-md-2">
+		</div>
+	</div>
+	<br><br>
+<div class="row">
+<div class="col-xs-3 col-md-3">
+</div>
+<div class="col-xs-6 col-md-6">
+	<table style="width: 100%; background-color: white; text-align: center;">
+		<tr>
+			<th>DOCTOR ID</th>
+			<th>DOCTOR NAME</th>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+</div>
+<div class="col-xs-2 col-md-2">
+</div>
+</div>
+<br><br>
+<div class="row">
+	<!-- <%= data.h_id %> -->
+<div class="col-xs-5 col-md-5">
+</div>
+<div class="col-xs-2 col-md-2">
+<input type="button" value="ADD / REMOVE DOCTORS" class="formbuttons" onclick="window.location.href='/add_remove'">
+</div>
+<div class="col-xs-5 col-md-5">
+</div>
+</div>
+<br><br>
+</div>
+</body>
+</html>
