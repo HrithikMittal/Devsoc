@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+	<title>Dragonov</title>
+
+	<!--  -->
+
+	<style>
+        .box{
+            height: 600px;
+            width: 600px;
+            margin:0px auto;
+            border-radius: 20px;
+            border:solid 2px black;
+            background-color: rgba(211,211,211,0.7);
+            font-size: 30px;
+        }
+        body{
+            height: 700px;
+        }
+        #particles-js{
+            height: 880px;
+        }
+	</style>
+
+</head>
+
+<body>
+    <div id="particles-js" class="particle-ad" style="position: absolute;"></div>
+
+	<div class="container" style="position: absolute;text-align: center;margin: 0px 300px;">
+<div class="alert alert-success" style="margin-top: 30px;font-size: 50px;" role="alert">Add a new Block into the Chain</div>
+
+<div class="box">
+  <form name="myForm" action="http://localhost:3000/addblock" method="POST">
+   <div class="" style="margin: 20px 0px 0px 110px;width: 100px;float: left;">Block</div>
+   <input style="float: left;margin-top: 20px;" placeholder="&emsp; #2"  type="text" disabled>
+    
+       <div class="" style="margin: 20px 0px 0px 42px;width: 100px;">Data</div>
+       <textarea style="margin-top: 20px;margin: 10px 0px 0px 40px" name="Content" type="text" id="" cols="34" rows="8"></textarea>
+   
+   
+   <button id="Save" onclick="f1()" value="test" type="submit" style="border-style:none; text-align: center;margin: 20px 0px 0px 0px;border: 10px;width: 170px;" href="../../index.html" >Submit</button>
+   
+   </form>
+</div>
+    <br>
+   <div id="autherticationValid" style="display:none" class="alert alert-warning" style="font-size: 40px;" role="alert">A New Block is Added.</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<script>
+	</script>
+<script src="js/particles.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/scriptfactury.js"></script>
+<script>
+    function f1(){
+         window.location.href="../../index.html";
+    }
+</script>
+</body>
+
+</html>
