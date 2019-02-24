@@ -5,23 +5,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
     <title>Document</title>
+	<style>
+	#messageArea{
+        display: block;
+      }
+	  .regform{
+			border-style: solid;
+			border-radius: 45px;
+			background: white;
+			margin-top: 20%;
+			padding: 3%;
+		}
+		body{
+			background: #FDFC47;
+			background: -webkit-linear-gradient(to right, #24FE41, #FDFC47);
+			background: linear-gradient(to right, #24FE41, #FDFC47);
+		}
+		#userFormArea{
+		margin: 2%;
+		}
+		h1{
+		text-align: center;
+		}
+		.chat{
+		margin: 2%;
+		}
+	</style>
 </head>
 
 <body>
-
-    <h1>Do you Want?</h1>
-
-    <form action="/privatechat" method="GET" role="form">
-
-        <button type="submit" class="btn btn-large btn-block btn-default">Personal
-            Chat</button>
-    </form>
-
-    <body>
-        <div id="fb-root"></div>
-        <div class="fb-comments" data-href="localhost/main.html" data-width="500" data-numposts="1"></div>
+	<div class="container">
+			<br>
+				<div class="row">
+				<div class="col-md-12 col-lg-6">
+				<div class="regform">
+				<div id="fb-root"></div>
+				<div class="fb-comments" data-href="localhost/main.html" data-width="500" data-numposts="1"></div>
+				</div>
+				</div>
+				<div class="col-md-12 col-lg-6">
+				<div class="regform">
+					<h1>Do you Want?</h1>
+					<form action="/privatechat" method="GET" role="form">
+						<input type="submit" class="btn btn-large btn-block btn-default chat" style="width: 95%;"value="Personal Chat">
+					</form>
+					<br>
+				</div>
+				</div>
+				</div>
+			</div>
+		
+<body>
     </body>
 
 
