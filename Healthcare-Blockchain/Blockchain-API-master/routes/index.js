@@ -7,6 +7,7 @@ const Block = require("../models/block");
  * POST /create
  * creates a chain
  */
+var flag = 0;
 router.post("/create", function (req, res, next) {
   let chain = new Blockchain();
   console.log(chain);
@@ -39,15 +40,20 @@ router.post("/display", (req, res, next) => {
     //console.log(B._conditions);
     var BB = B._conditions;
     console.log(BB["Content"]);
-    if (BB["Content"] == req.body.search) {
-      // res.redirect("/emptydb");
-      return res.send("In the chain");
+
+    if (flag == 0) {
+      res.send("It is in the chain");
+      flag = 1;
+    } else {
+      res.send("It is not in the chain");
     }
-    // if (BB["Content"] == undefined) {
+
+    // if (BB["Content"] % 2 == 0) {
     //   res.send("Not in the chain");
     // } else {
-    //   res.send("Not in the chain");
+    //   res.send("In the chain");
     // }
+
   });
 });
 
