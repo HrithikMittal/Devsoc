@@ -14,6 +14,6 @@
     "crypto-js": "^3.1.9-1",
     "express": "^4.16.4",
     "mongodb": "^3.1.13",
-    "mongoose": "^5.4.14"
+    "mongoose": "^5.7.5"
   }
 }
